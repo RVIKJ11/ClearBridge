@@ -1,0 +1,553 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --border: #e5e5e5;
+  --accent: #4f46e5;
+  --surface: #fafafa;
+}
+
+/* =============================================================
+   HIGH CONTRAST MODE
+   Override Tailwind v4 CSS custom property tokens so every
+   utility class (bg-white, text-gray-900, border-gray-200, etc.)
+   automatically inherits the accessible dark-mode palette.
+   ============================================================= */
+
+.high-contrast {
+  /* App-level tokens */
+  --bg: #000000;
+  --text: #ffffff;
+  --border: #ffffff;
+  --accent: #ffff00;
+  --surface: #111111;
+
+  /* ── Tailwind v4 color token overrides ── */
+
+  /* Whites / blacks */
+  --color-white: #0a0a0a;
+
+  /* Gray scale  →  dark backgrounds, near-white text */
+  --color-gray-50:  #111111;
+  --color-gray-100: #1c1c1c;
+  --color-gray-200: #2d2d2d;
+  --color-gray-300: #404040;
+  --color-gray-400: #a0a0a0;
+  --color-gray-500: #b8b8b8;
+  --color-gray-600: #cccccc;
+  --color-gray-700: #dedede;
+  --color-gray-800: #eeeeee;
+  --color-gray-900: #ffffff;
+  --color-gray-950: #ffffff;
+
+  /* Indigo / primary — bg shades → black, text shades → white, accent → yellow */
+  --color-indigo-50:  #0a0a0a;
+  --color-indigo-100: #141414;
+  --color-indigo-200: #222222;
+  --color-indigo-300: #3d3370;
+  --color-indigo-400: #ffee00;
+  --color-indigo-500: #ffff00;
+  --color-indigo-600: #ffee00;
+  --color-indigo-700: #ffd700;
+  --color-indigo-800: #ffffff;
+  --color-indigo-900: #f0f0f0;
+
+  /* Violet — bg shades → black, text shades → white, accent → yellow */
+  --color-violet-50:  #0a0a0a;
+  --color-violet-100: #141414;
+  --color-violet-200: #222222;
+  --color-violet-300: #ffee00;
+  --color-violet-400: #ffee00;
+  --color-violet-500: #ffee00;
+  --color-violet-600: #ffff00;
+  --color-violet-700: #ffd700;
+  --color-violet-800: #ffffff;
+  --color-violet-900: #f0f0f0;
+
+  /* Blue  →  solid medium blue (not neon, not washed-out) */
+  --color-blue-50:  #001a2e;
+  --color-blue-100: #002040;
+  --color-blue-200: #003366;
+  --color-blue-500: #60a5fa;
+  --color-blue-600: #3b82f6;
+  --color-blue-700: #2563eb;
+
+  /* Emerald  →  bright green */
+  --color-emerald-50:  #001a0d;
+  --color-emerald-100: #002211;
+  --color-emerald-500: #00ff88;
+  --color-emerald-600: #00ee77;
+}
+
+.high-contrast body {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+/* Header: solid dark background, no frosted glass */
+.high-contrast header {
+  background-color: #000000 !important;
+  border-bottom-color: #2a2a2a !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Nav pill container and all header buttons — bright white borders */
+.high-contrast header nav > div,
+.high-contrast header [role="toolbar"] button {
+  border-color: #ffffff !important;
+}
+
+/* Hero section: remove gradient, solid black */
+.high-contrast .hero-bg {
+  background: #000000 !important;
+}
+
+/* ModeSelector description box borders — visible gray outline on the black box */
+.high-contrast .border-violet-200,
+.high-contrast .border-indigo-200 {
+  border-color: #555555 !important;
+}
+
+/* Gradient text → solid yellow so it stays readable on dark bg */
+.high-contrast .gradient-text,
+.high-contrast .gradient-text-warm {
+  background: none !important;
+  -webkit-text-fill-color: #ffff00 !important;
+  color: #ffff00 !important;
+}
+
+/* Card hover: yellow focus ring instead of soft colour shadow */
+.high-contrast .card-hover:hover {
+  box-shadow: 0 0 0 2px #ffff00 !important;
+  transform: translateY(-2px);
+}
+
+/* ── Explicit text-color overrides (belt-and-suspenders for Tailwind classes
+      that don't resolve through the CSS variable cascade) ── */
+
+/* Dark text classes → white in high contrast */
+.high-contrast .text-gray-950,
+.high-contrast .text-gray-900,
+.high-contrast .text-gray-800,
+.high-contrast .text-gray-700 {
+  color: #ffffff !important;
+}
+
+.high-contrast .text-gray-600 { color: #dddddd !important; }
+.high-contrast .text-gray-500 { color: #cccccc !important; }
+.high-contrast .text-gray-400 { color: #aaaaaa !important; }
+
+/* White text on indigo/violet/blue → stays white (already appropriate on dark) */
+.high-contrast .text-white { color: #ffffff !important; }
+
+/* Accent-coloured text → yellow */
+.high-contrast .text-indigo-600,
+.high-contrast .text-indigo-700,
+.high-contrast .text-indigo-500,
+.high-contrast .text-violet-600 {
+  color: #ffff00 !important;
+}
+
+.high-contrast .text-blue-600,
+.high-contrast .text-blue-500 {
+  color: #00e5e5 !important;
+}
+
+.high-contrast .text-emerald-600,
+.high-contrast .text-emerald-500 {
+  color: #00ee77 !important;
+}
+
+/* Buttons/elements on a now-yellow accent background need dark text */
+.high-contrast .bg-indigo-600,
+.high-contrast .bg-indigo-500,
+.high-contrast .bg-violet-600,
+.high-contrast .from-indigo-600,
+.high-contrast .to-violet-600 {
+  color: #000000 !important;
+}
+
+/* Logo icon: yellow background in high-contrast → black strokes so it pops */
+.high-contrast .from-indigo-500.to-violet-600 svg {
+  color: #000000 !important;
+}
+
+/* "White background" elements (cards, outlined buttons) now have dark bg –
+   flip any dark text to white */
+.high-contrast .bg-white { color: #ffffff !important; }
+
+/* Make outlined-button borders visible on dark backgrounds */
+.high-contrast .border-gray-200,
+.high-contrast .border-gray-100 {
+  border-color: #ffffff !important;
+}
+
+/* Keep the header's bottom divider a subtle dark grey, not white */
+.high-contrast header.border-b {
+  border-bottom-color: #2a2a2a !important;
+}
+
+/* Scrollbar track in high contrast */
+.high-contrast ::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+/* Contrast toggle button active state — pinned colours so it stays
+   legible in both normal and high-contrast mode */
+.contrast-btn-active {
+  background-color: #111111;
+  color: #ffffff;
+}
+.high-contrast .contrast-btn-active {
+  background-color: #222222 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+
+/* =============================================================
+   SESSION PAGE — HIGH CONTRAST OVERRIDES
+   Default session page is now a light (gray-50) canvas.
+   In high-contrast mode we switch it to the dark slate-900
+   palette so it reads as a high-visibility dark theme.
+   ============================================================= */
+
+/* Restore dark header for session page in high-contrast */
+.high-contrast header.is-session {
+  background-color: #0f172a !important; /* slate-900 */
+  border-bottom-color: #475569 !important; /* slate-600 */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Logo and all gray text in session header → white */
+.high-contrast header.is-session [class*="text-gray"],
+.high-contrast header.is-session .text-gray-900 {
+  color: #ffffff !important;
+}
+
+/* Nav link and button borders → visible on dark bg */
+.high-contrast header.is-session .border-gray-100,
+.high-contrast header.is-session .border-gray-200,
+.high-contrast header.is-session .border-gray-400,
+.high-contrast header.is-session .border-gray-600 {
+  border-color: #64748b !important;
+}
+
+/* Set session body to dark slate + force white base text */
+.high-contrast .session-body {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* Toolbar / footer dividers and button borders */
+.high-contrast .session-body .border-gray-200,
+.high-contrast .session-body .border-gray-400,
+.high-contrast .session-body .border-gray-700 {
+  border-color: #64748b !important; /* slate-500 */
+}
+
+/* All gray text → white */
+.high-contrast .session-body .text-gray-900,
+.high-contrast .session-body .text-gray-700,
+.high-contrast .session-body .text-gray-500,
+.high-contrast .session-body .text-gray-400,
+.high-contrast .session-body .text-gray-300,
+.high-contrast .session-body .text-gray-200,
+.high-contrast header.is-session [class*="text-gray"] {
+  color: #ffffff !important;
+}
+
+/* Light surface backgrounds → dark slate */
+.high-contrast .session-body .bg-gray-50  { background-color: #0f172a !important; }
+.high-contrast .session-body .bg-gray-100 { background-color: #1e293b !important; }
+.high-contrast .session-body .bg-gray-200 { background-color: #334155 !important; }
+.high-contrast .session-body .bg-white    { background-color: #1e293b !important; color: #ffffff !important; }
+
+/* Error text */
+.high-contrast .session-body .text-red-600 { color: #fca5a5 !important; }
+
+/* Unsupported / warning banner */
+.high-contrast .session-body .bg-amber-50    { background-color: #451a03 !important; }
+.high-contrast .session-body .border-amber-300 { border-color: #92400e !important; }
+.high-contrast .session-body .text-amber-700 { color: #fde68a !important; }
+
+/* Search input */
+.high-contrast .session-body input[type="text"] {
+  background-color: #1e293b !important;
+  border-color: #475569 !important;
+  color: #ffffff !important;
+}
+.high-contrast .session-body input[type="text"]::placeholder { color: #94a3b8 !important; }
+
+/* HighlightFilterBar inactive chip borders */
+.high-contrast .session-body [role="toolbar"] .border-gray-200,
+.high-contrast .session-body [role="toolbar"] .border-gray-300 {
+  border-color: #64748b !important; /* slate-500 */
+}
+
+/* Annotation tag text — readable over the dark highlight-row backgrounds */
+.high-contrast .session-body .text-blue-800   { color: #93c5fd !important; }
+.high-contrast .session-body .text-emerald-800 { color: #6ee7b7 !important; }
+.high-contrast .session-body .text-amber-900  { color: #fde68a !important; }
+.high-contrast .session-body .text-purple-800 { color: #d8b4fe !important; }
+.high-contrast .session-body .text-teal-800   { color: #99f6e4 !important; }
+.high-contrast .session-body .text-indigo-800 { color: #a5b4fc !important; }
+
+/* Annotation tag badge backgrounds */
+.high-contrast .session-body .bg-blue-100   { background-color: #1e3a5f !important; }
+.high-contrast .session-body .bg-emerald-100 { background-color: #14432a !important; }
+.high-contrast .session-body .bg-amber-100  { background-color: #451a03 !important; }
+.high-contrast .session-body .bg-purple-100 { background-color: #3b0764 !important; }
+.high-contrast .session-body .bg-teal-100   { background-color: #134e4a !important; }
+.high-contrast .session-body .bg-indigo-100 { background-color: #1e1b4b !important; }
+
+/* Highlight row line backgrounds (light bg-*-50 → dark equivalents) */
+.high-contrast .session-body .bg-blue-50   { background-color: #1e3a5f !important; }
+.high-contrast .session-body .bg-emerald-50 { background-color: #14432a !important; }
+.high-contrast .session-body .bg-purple-50 { background-color: #3b0764 !important; }
+.high-contrast .session-body .bg-teal-50   { background-color: #134e4a !important; }
+.high-contrast .session-body .bg-indigo-50 { background-color: #1e1b4b !important; }
+
+/* Highlight row left-border accents (light border-*-300 → vivid) */
+.high-contrast .session-body .border-blue-300   { border-color: #60a5fa !important; }
+.high-contrast .session-body .border-emerald-300 { border-color: #34d399 !important; }
+.high-contrast .session-body .border-amber-300  { border-color: #fbbf24 !important; }
+.high-contrast .session-body .border-purple-300 { border-color: #c084fc !important; }
+.high-contrast .session-body .border-teal-300   { border-color: #2dd4bf !important; }
+.high-contrast .session-body .border-indigo-300 { border-color: #818cf8 !important; }
+
+/* Topic-shift divider */
+.high-contrast .session-body .topic-shift-divider {
+  color: #a5b4fc !important;
+}
+.high-contrast .session-body .topic-shift-divider::before,
+.high-contrast .session-body .topic-shift-divider::after {
+  background: #a5b4fc !important;
+}
+
+/* Bookmark labels */
+.high-contrast .session-body .text-amber-300,
+.high-contrast .session-body .text-amber-400 {
+  color: #fde68a !important;
+}
+
+/* =============================================================
+   LARGE TEXT MODE
+   Scale up body copy while keeping the header chrome stable
+   ============================================================= */
+
+.large-text {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.large-text h1 { font-size: 2.5rem; }
+.large-text h2 { font-size: 2rem; }
+.large-text h3 { font-size: 1.5rem; }
+.large-text p, .large-text li { font-size: 1.25rem; line-height: 1.875rem; }
+
+/* Scale up buttons in page content only — not in the header */
+.large-text main button { font-size: 1.125rem; }
+
+/* Keep every element inside the header at its designed size */
+.large-text header button,
+.large-text header a,
+.large-text header span {
+  font-size: unset !important;
+  line-height: unset !important;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Plus Jakarta Sans for all header chrome */
+header, header a, header button, header nav {
+  font-family: var(--font-header), sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: var(--accent);
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 9999;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d2fe;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a5b4fc;
+}
+
+@keyframes bounceX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(6px); }
+}
+
+.animate-bounce-x {
+  animation: bounceX 0.8s ease-in-out infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-warm {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 60%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-bg {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99, 102, 241, 0.12) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 90% 50%, rgba(124, 58, 237, 0.07) 0%, transparent 60%),
+              #ffffff;
+}
+
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(79, 70, 229, 0.12);
+}
+
+/* =============================================================
+   LIVE TRANSCRIPT — ACTIVE LINE INDICATOR
+   ============================================================= */
+
+@keyframes activeLinePulse {
+  0%, 100% {
+    box-shadow: inset 3px 0 0 0 #4f46e5, 0 0 0 0 rgba(79, 70, 229, 0.35);
+  }
+  50% {
+    box-shadow: inset 3px 0 0 0 #6366f1, 0 0 0 4px rgba(79, 70, 229, 0.12);
+  }
+}
+
+.transcript-active-line {
+  animation: activeLinePulse 1.6s ease-in-out infinite;
+  border-left: 3px solid transparent;
+  padding-left: 10px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.high-contrast .transcript-active-line {
+  animation: none;
+  box-shadow: inset 4px 0 0 0 #ffff00;
+}
+
+@keyframes annotationFadeIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.transcript-annotation-tag {
+  animation: annotationFadeIn 0.25s ease-out forwards;
+}
+
+/* Topic shift divider */
+.topic-shift-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0 10px 0;
+  color: #6366f1;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.topic-shift-divider::before,
+.topic-shift-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #c7d2fe, transparent);
+}
+
+.high-contrast .topic-shift-divider {
+  color: #ffff00;
+}
+.high-contrast .topic-shift-divider::before,
+.high-contrast .topic-shift-divider::after {
+  background: #ffff00;
+}
+
+/* Print styles for highlights — preserve background colors when printing PDF */
+@media print {
+  .highlight-bg, .transcript-annotation-tag, .topic-shift-divider {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .transcript-active-line {
+    animation: none !important;
+    box-shadow: none !important;
+    border-left: 3px solid #4f46e5 !important;
+  }
+}
